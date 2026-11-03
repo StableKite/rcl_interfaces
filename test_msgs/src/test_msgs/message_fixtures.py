@@ -12,6 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from typing import Literal as _rosidl_Literal
+from typing import overload as _rosidl_overload
+from typing import cast as _rosidl_cast
+
 from test_msgs.msg import Arrays
 from test_msgs.msg import BasicTypes
 from test_msgs.msg import BoundedPlainSequences
@@ -27,14 +31,14 @@ from test_msgs.msg import UnboundedSequences
 from test_msgs.msg import WStrings
 
 
-def int_from_uint(value, nbits):
+def int_from_uint(value: int, nbits: int) -> int:
     value = value % (1 << nbits)
     if value >= (1 << (nbits - 1)):
         value = value - (1 << nbits)
     return value
 
 
-def get_msg_builtins():
+def get_msg_builtins() -> list[Builtins]:
     msg = Builtins()
     msg.duration_value.sec = -1234567890
     msg.duration_value.nanosec = 123456789
@@ -44,14 +48,14 @@ def get_msg_builtins():
     return [msg]
 
 
-def get_msg_empty():
+def get_msg_empty() -> list[Empty]:
     msg = Empty()
 
     return [msg]
 
 
-def get_msg_basic_types():
-    msgs = []
+def get_msg_basic_types() -> list[BasicTypes]:
+    msgs: list[BasicTypes] = []
     msg = BasicTypes()
     msg.bool_value = False
     msg.byte_value = bytes([0])
@@ -119,18 +123,18 @@ def get_msg_basic_types():
     return msgs
 
 
-def get_msg_constants():
+def get_msg_constants() -> list[Constants]:
     msg = Constants()
     return [msg]
 
 
-def get_msg_defaults():
+def get_msg_defaults() -> list[Defaults]:
     msg = Defaults()
     return [msg]
 
 
-def get_msg_strings():
-    msgs = []
+def get_msg_strings() -> list[Strings]:
+    msgs: list[Strings] = []
     msg = Strings()
     msg.string_value = ''
     msg.bounded_string_value = ''
@@ -159,8 +163,8 @@ def get_msg_strings():
     return msgs
 
 
-def get_msg_nested():
-    msgs = []
+def get_msg_nested() -> list[Nested]:
+    msgs: list[Nested] = []
 
     basic_types_msgs = get_msg_basic_types()
     for basic_types_msg in basic_types_msgs:
@@ -171,9 +175,9 @@ def get_msg_nested():
     return msgs
 
 
-def get_msg_arrays():
+def get_msg_arrays() -> list[Arrays]:
     basic_types_msgs = get_msg_basic_types()
-    msgs = []
+    msgs: list[Arrays] = []
     msg = Arrays()
     msg.bool_values = [False, True, False]
     msg.char_values = [0, 255, 0]
@@ -190,15 +194,15 @@ def get_msg_arrays():
     msg.uint64_values = [0, 18446744073709551615, 0]
     msg.string_values = ['', 'max value', 'min value']
     for i in range(len(msg.basic_types_values)):
-        msg.basic_types_values[i] = basic_types_msgs[i]
+        _rosidl_cast('list[BasicTypes]', msg.basic_types_values)[i] = basic_types_msgs[i]
     msgs.append(msg)
 
     return msgs
 
 
-def get_msg_unbounded_sequences():
+def get_msg_unbounded_sequences() -> list[UnboundedSequences]:
     basic_types_msgs = get_msg_basic_types()
-    msgs = []
+    msgs: list[UnboundedSequences] = []
     msg = UnboundedSequences()
     msg.bool_values = []
     msg.char_values = []
@@ -284,9 +288,9 @@ def get_msg_unbounded_sequences():
     return msgs
 
 
-def get_msg_bounded_sequences():
+def get_msg_bounded_sequences() -> list[BoundedSequences]:
     basic_types_msgs = get_msg_basic_types()
-    msgs = []
+    msgs: list[BoundedSequences] = []
     msg = BoundedSequences()
     msg.bool_values = [False, True, False]
     msg.byte_values = [bytes([0]), bytes([1]), bytes([255])]
@@ -313,9 +317,9 @@ def get_msg_bounded_sequences():
     return msgs
 
 
-def get_msg_bounded_plain_sequences():
+def get_msg_bounded_plain_sequences() -> list[BoundedPlainSequences]:
     basic_types_msgs = get_msg_basic_types()
-    msgs = []
+    msgs: list[BoundedPlainSequences] = []
     msg = BoundedPlainSequences()
     msg.bool_values = [False, True, False]
     msg.byte_values = [bytes([0]), bytes([1]), bytes([255])]
@@ -341,7 +345,7 @@ def get_msg_bounded_plain_sequences():
     return msgs
 
 
-def get_msg_multi_nested():
+def get_msg_multi_nested() -> list[MultiNested]:
     arrays_msgs = get_msg_arrays()
     bounded_sequences_msgs = get_msg_bounded_sequences()
     unbounded_sequences_msgs = get_msg_unbounded_sequences()
@@ -370,8 +374,8 @@ def get_msg_multi_nested():
     return [msg]
 
 
-def get_msg_wstrings():
-    msgs = []
+def get_msg_wstrings() -> list[WStrings]:
+    msgs: list[WStrings] = []
 
     msg = WStrings()
     msg.wstring_value = ''
@@ -395,7 +399,51 @@ def get_msg_wstrings():
     return msgs
 
 
-def get_test_msg(message_name):
+FixtureMessageLists = list[Builtins] | list[Empty] | list[BasicTypes] | list[Constants] | list[Defaults] | list[Strings] | list[Nested] | list[Arrays] | list[BoundedPlainSequences] | list[BoundedSequences] | list[UnboundedSequences] | list[MultiNested] | list[WStrings]
+
+@_rosidl_overload
+def get_test_msg(message_name: _rosidl_Literal['Builtins']) -> list[Builtins]: ...
+
+@_rosidl_overload
+def get_test_msg(message_name: _rosidl_Literal['Empty']) -> list[Empty]: ...
+
+@_rosidl_overload
+def get_test_msg(message_name: _rosidl_Literal['BasicTypes']) -> list[BasicTypes]: ...
+
+@_rosidl_overload
+def get_test_msg(message_name: _rosidl_Literal['Constants']) -> list[Constants]: ...
+
+@_rosidl_overload
+def get_test_msg(message_name: _rosidl_Literal['Defaults']) -> list[Defaults]: ...
+
+@_rosidl_overload
+def get_test_msg(message_name: _rosidl_Literal['Strings']) -> list[Strings]: ...
+
+@_rosidl_overload
+def get_test_msg(message_name: _rosidl_Literal['Nested']) -> list[Nested]: ...
+
+@_rosidl_overload
+def get_test_msg(message_name: _rosidl_Literal['Arrays']) -> list[Arrays]: ...
+
+@_rosidl_overload
+def get_test_msg(message_name: _rosidl_Literal['BoundedPlainSequences']) -> list[BoundedPlainSequences]: ...
+
+@_rosidl_overload
+def get_test_msg(message_name: _rosidl_Literal['BoundedSequences']) -> list[BoundedSequences]: ...
+
+@_rosidl_overload
+def get_test_msg(message_name: _rosidl_Literal['UnboundedSequences']) -> list[UnboundedSequences]: ...
+
+@_rosidl_overload
+def get_test_msg(message_name: _rosidl_Literal['MultiNested']) -> list[MultiNested]: ...
+
+@_rosidl_overload
+def get_test_msg(message_name: _rosidl_Literal['WStrings']) -> list[WStrings]: ...
+
+@_rosidl_overload
+def get_test_msg(message_name: str) -> FixtureMessageLists: ...
+
+def get_test_msg(message_name: str) -> FixtureMessageLists:
     if 'Builtins' == message_name:
         msg = get_msg_builtins()
     elif 'Empty' == message_name:
